@@ -7,5 +7,6 @@ int main() {
 	a(0, 1) = 2;
 	a(1, 0) = 3;
 	a(1, 1) = 4;
-	std::cout << a;
+	linalg::Matrix b = { {1, 3}, {2, 3} };
+	std::cout << a << b << a * b;
 }
