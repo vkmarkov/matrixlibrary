@@ -4,12 +4,16 @@
 namespace linalg {
 
 	// Constructors
-	Matrix::Matrix(size_t rows) noexcept {
+	Matrix::Matrix(size_t rows) {
+		if (rows < 0)
+			throw std::runtime_error("The matrix cannot be with a negative number of rows");
 		m_rows = rows;
 		m_ptr = new double[rows];
 	}
 
-	Matrix::Matrix(size_t rows, size_t columns) noexcept {
+	Matrix::Matrix(size_t rows, size_t columns) {
+		if ((rows < 0) || (columns < 0))
+			throw std::runtime_error("The matrix cannot be with a negative number of rows or columns");
 		m_rows = rows;
 		m_columns = columns;
 		m_ptr = new double[rows * columns];
@@ -57,17 +61,8 @@ namespace linalg {
 		}
 	}
 
-
-	//Methods
-	void linalg::Matrix::reshape(int rows, int columns) {
-		if (rows * columns != m_rows * m_columns) 
-			throw std::runtime_error("Number of elements in reshaped matrix must be the same");
-		m_rows = rows;
-		m_columns = columns;
-	}
-	 
 	//Operators
-
+	
 	std::ostream& operator<<(std::ostream& out, const Matrix& m) { //Output operator
 		for (size_t i = 0; i < m.rows(); ++i) {
 			for (size_t j = 0; j < m.columns(); ++j) {
@@ -110,7 +105,7 @@ namespace linalg {
 		return res;
 	}
 	
-	Matrix& Matrix::operator+=(const Matrix& m) noexcept {
+	Matrix& Matrix::operator+=(const Matrix& m) {
 		*this = *this + m;
 		return *this;
 	}
@@ -134,7 +129,7 @@ namespace linalg {
 			throw std::runtime_error("Matrix sizes are different");
 	}
 
-	Matrix& Matrix::operator-=(const Matrix& m) noexcept {
+	Matrix& Matrix::operator-=(const Matrix& m) {
 		*this = *this - m; //move operator
 		return *this;
 	};
@@ -159,10 +154,61 @@ namespace linalg {
 		return res;
 	}
 
-	Matrix& Matrix::operator*=(const Matrix& m) noexcept {
+	Matrix& Matrix::operator*=(const Matrix& m) {
 		*this = *this * m;
 		return *this;
 	}
 
-	
+	static bool equal(const double& a, const double& b) { return std::fabs(a - b) < 1e-10; }
+
+	bool operator==(const Matrix& m1, const Matrix& m2) {
+		if ((m1.rows() != m2.rows()) || (m1.columns() != m2.columns())) 
+			return false;
+		for (size_t i = 0; i < m1.rows(); ++i) {
+			for (size_t j = 0; j < m1.columns(); ++j) {
+				if (!equal(m1(i, j), m2(i, j))) return false; 
+			}
+		}
+		return true;
+	}
+
+	bool operator !=(const Matrix& m1, const Matrix& m2) { return !(m1 == m2); }
+
+
+	//Methods
+
+	void linalg::Matrix::reshape(int rows, int columns) {
+		if (rows * columns != m_rows * m_columns)
+			throw std::runtime_error("Number of elements in reshaped matrix must be the same");
+		m_rows = rows;
+		m_columns = columns;
+	}
+
+	//Methods for matrices
+
+	double Matrix::norm() const {
+		if (empty()) 
+			throw std::runtime_error("Matrix is empty");
+		double res = 0;
+		for (size_t i = 0; i < m_rows; ++i) {
+			for (size_t j = 0; j < m_columns; ++j) {
+				res += m_ptr[i * m_columns + j] * m_ptr[i * m_columns + j];
+			}
+		}
+		return sqrt(res);
+	}
+
+	double Matrix::trace() const {
+		if (empty())
+			throw std::runtime_error("Matrix is empty");
+		if (m_rows != m_columns)
+			throw std::runtime_error("Matrix is not square");
+		double res = 0;
+		for (int i = 0; i < m_rows; ++i) {
+			res += m_ptr[i * m_columns + i];
+		}
+		return res;
+	}
+
+
 }

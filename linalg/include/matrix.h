@@ -7,10 +7,10 @@ namespace linalg {
 	class Matrix {
 	public: //Constructors
 		Matrix() noexcept {}
-		Matrix(size_t rows) noexcept;
-		Matrix(size_t rows, size_t columns) noexcept;
-		Matrix(const Matrix& m) noexcept;
-		Matrix(Matrix&& m) noexcept;
+		Matrix(size_t rows);
+		Matrix(size_t rows, size_t columns);
+		Matrix(const Matrix& m) noexcept;//copy
+		Matrix(Matrix&& m) noexcept;//move
 		Matrix::Matrix(std::initializer_list<double> lst) noexcept;
 		Matrix::Matrix(std::initializer_list<std::initializer_list<double>> lst);
 
@@ -22,15 +22,21 @@ namespace linalg {
 		size_t columns() const noexcept { return m_columns; }
 		bool empty() const noexcept { return (m_rows == 0); }
 		void reshape(int new_rows, int new_columns);
+		
+		//Methods for matrices
+		double trace() const;
+		double Matrix::norm() const;
+		
+		//Operators
 		double& Matrix::operator ()(size_t row, size_t column);
 		const double& Matrix::operator ()(size_t row, size_t column) const;
 
-	public: //Assignment and arifmetic operators
+		//Assignment and arifmetic operators
 		Matrix& operator=(Matrix m) noexcept;
-		Matrix& operator+=(const Matrix& m) noexcept;
-		Matrix& operator-=(const Matrix& m) noexcept;
+		Matrix& operator+=(const Matrix& m);
+		Matrix& operator-=(const Matrix& m);
 		Matrix& operator*=(const double c) noexcept;
-		Matrix& operator*=(const Matrix& m) noexcept;
+		Matrix& operator*=(const Matrix& m);
 
 	private: //Fields
 		double* m_ptr = nullptr;
@@ -46,5 +52,9 @@ namespace linalg {
 	Matrix operator*(const Matrix& m1, const Matrix& m2);
 	Matrix operator*(const Matrix& m, const double c) noexcept;
 	Matrix operator*(const double c, const Matrix& m) noexcept;
+
+	//Assigment operators out of class
+	bool operator==(const Matrix& m1, const Matrix& m2);
+	bool operator!=(const Matrix& m1, const Matrix& m2);
 
 }
