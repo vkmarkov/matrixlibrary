@@ -36,9 +36,10 @@ namespace linalg {
 
 		//Methods for matrices
 		double trace() const;
-		double Matrix::norm() const;
-		Matrix Matrix::Gauss(bool rref) const;
-		double Matrix::det() const;
+		double norm() const;
+		Matrix Gauss(bool rref) const; //+
+		double det() const;
+		double minor(size_t rows, size_t columns) const; //+
 
 	private: //Fields
 		double* m_ptr = nullptr;
@@ -63,5 +64,7 @@ namespace linalg {
 	//Functions for matrices
 	Matrix concatenate(const Matrix& m1, const Matrix& m2); //Вопрос, почему эти функции лежат вне класса
 	Matrix transpose(const Matrix& m);
-
+	Matrix uni(size_t n); //Auxiliary function for creating a unit matrix //+
+	const Matrix invert(const Matrix& m);
+	Matrix power(const Matrix& m, int deg);
 }

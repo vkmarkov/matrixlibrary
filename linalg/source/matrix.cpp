@@ -88,7 +88,9 @@ namespace linalg {
 	}
 
 	Matrix& Matrix::operator=(Matrix other) noexcept { //Assignment operator
-		std::swap(*this, other);
+		std::swap(this->m_ptr, other.m_ptr);
+		std::swap(this->m_rows, other.m_rows);
+		std::swap(this->m_columns, other.m_columns);
 		return *this;
 	}
 
@@ -260,6 +262,30 @@ namespace linalg {
 		return opr;
 	}
 
+	double Matrix::minor(size_t rows, size_t columns) const { //Minor 
+		if ((rows >= m_rows) || (columns >= m_columns)) {
+			throw std::runtime_error("Position is outside the matrix");
+		}
+		Matrix res(m_rows - 1, m_columns - 1);
+		for (size_t i = 0; i < m_rows; ++i) {
+			for (size_t j = 0; j < m_columns; ++j) {
+				if (i < rows) {
+					if (j < columns)
+						res(i, j) = (*this)(i, j);
+					else if (j > columns)
+						res(i, j - 1) = (*this)(i, j);
+				}
+				else if (i > rows) {
+					if (j < columns)
+						res(i - 1, j) = (*this)(i, j);
+					else if (j > columns)
+						res(i - 1, j - 1) = (*this)(i, j);
+				}
+			}
+		}
+		return res.det();
+	}
+
 	//Functions for matrices
 	Matrix concatenate(const Matrix& m1, const Matrix& m2) { //Concatenate
 		if (m1.rows() != m2.rows()) 
@@ -284,8 +310,6 @@ namespace linalg {
 	}
 
 	Matrix transpose(const Matrix& m) { //Transpose
-		if (m.empty()) 
-			throw std::runtime_error("Matrix is empty");
 		Matrix res(m.columns(), m.rows());
 		for (size_t i = 0; i < res.rows(); ++i) {
 			for (size_t j = 0; j < res.columns(); ++j) {
@@ -294,5 +318,51 @@ namespace linalg {
 		}
 		return res;
 	}
+
+	Matrix uni(size_t n) { //Unit matrix
+		Matrix res(n, n);
+		for (size_t i = 0; i < n; ++i) {
+			for (size_t j = 0; j < n; ++j) {
+				if (i == j) 
+					res(i, j) = 1;
+				else  
+					res(i, j) = 0;
+			}
+		}
+		return res;
+	}
+
+	const Matrix invert(const Matrix& m) { //Invert
+		if ((m.rows() != m.columns()) || (fabs(m.det() - 0) < 1e-10)) {
+			throw std::runtime_error("There is no inverse for the matrix");
+		}
+		linalg::Matrix res(m.rows(), m.columns());
+		double det = m.det();
+		for (size_t i = 0; i < m.rows(); ++i) {
+			for (size_t j = 0; j < m.columns(); ++j) {
+				res(i, j) = pow(-1, (i + j)) * m.minor(i, j) / det;
+			}
+		}
+		return transpose(res);
+	}
+
+	Matrix power(const Matrix& m, int deg) { //Power
+		if (m.empty())
+			return m;
+		if (m.rows() != m.columns())
+			throw std::runtime_error("Different dimensions");
+		Matrix res;
+		if (deg == 0)
+			res = uni(m.rows());
+		else if (deg < 0)
+			res = invert(m);
+		else
+			res = m;
+		Matrix t = res;
+		for (int i = 1; i < abs(deg); ++i)
+			res *= t;
+		return res;
+	}
+
 
 }
