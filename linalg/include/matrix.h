@@ -21,7 +21,7 @@ namespace linalg {
 		size_t rows() const noexcept { return m_rows; }
 		size_t columns() const noexcept { return m_columns; }
 		bool empty() const noexcept { return (m_rows == 0); }
-		void reshape(int new_rows, int new_columns);
+		void reshape(size_t new_rows, size_t new_columns);
 
 		//Operators
 		double& Matrix::operator()(size_t row, size_t column);
@@ -29,6 +29,11 @@ namespace linalg {
 
 		//Assignment and arifmetic operators
 		Matrix& operator=(Matrix m) noexcept;
+		/**
+		* @brief Summ
+		* 
+		* @param[in] Matrix the matrix
+		*/
 		Matrix& operator+=(const Matrix& m);
 		Matrix& operator-=(const Matrix& m);
 		Matrix& operator*=(const double c) noexcept;
@@ -55,7 +60,7 @@ namespace linalg {
 	Matrix operator-(const Matrix& m1, const Matrix& m2);
 	Matrix operator*(const Matrix& m1, const Matrix& m2);
 	Matrix operator*(const Matrix& m, const double c) noexcept;
-	Matrix operator*(const double c, const Matrix& m) noexcept;
+	Matrix operator*(const double c, const Matrix& m) noexcept; ///delat
 
 	//Assigment operators out of class
 	bool operator==(const Matrix& m1, const Matrix& m2);

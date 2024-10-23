@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief C++ library for working with matrices
+ * @version 0.1.0
+ * @date 2024-10-21
+ * @authors vmarkov20
+ */
 #include "matrix.h"
 #include <iostream>
 #include <iomanip>
@@ -12,6 +19,7 @@ namespace linalg {
 		if (rows < 0)
 			throw std::runtime_error("The matrix cannot be with a negative number of rows");
 		m_rows = rows;
+		m_columns = 1;
 		m_ptr = new double[rows];
 	}
 
@@ -67,7 +75,7 @@ namespace linalg {
 
 	//Operators
 	
-	size_t max_length_first(const Matrix& m, const std::ostream& out) { // 1st column
+	size_t max_length_first(const Matrix& m, const std::ostream& out) { //maximum length of an element in 1st column
 		size_t max_number_of_digits = 0;
 		std::stringstream sout;
 		sout << std::setiosflags(out.flags()) << std::setprecision(out.precision()); // flags and precision from out
@@ -82,7 +90,7 @@ namespace linalg {
 		return max_number_of_digits;
 	}
 
-	size_t max_length_not_first(const Matrix& m, const std::ostream& out) { // not 1st column
+	size_t max_length_not_first(const Matrix& m, const std::ostream& out) { //maximum element length in the remaining columns
 		size_t max_number_of_digits = 0;
 		std::stringstream sout;
 		sout << std::setiosflags(out.flags()) << std::setprecision(out.precision()) /*<< std::setf(std::ios::scientific)*/; // flags and precision from out
@@ -110,7 +118,8 @@ namespace linalg {
 		size_t not_first = max_length_not_first(m, out);
 		for (size_t i = 0; i < m.rows(); ++i) {
 			out << '|';
-			if (equal(m(i, 0), 0)) { out << std::setw(first) << 0; }
+			if (equal(m(i, 0), 0)) 
+				out << std::setw(first) << 0; 
 			else {
 				out << std::setw(first) << m(i, 0);
 			};
@@ -148,16 +157,20 @@ namespace linalg {
 	}
 
 	//Arifmetic operators
+	/**
+	* @brief Summ
+	*
+	* @param[in] Matrix the matrix
+	*/
 	Matrix& Matrix::operator+=(const Matrix& m) {
 		if (m.rows() != m_rows || m.columns() != m_columns)
 			throw std::runtime_error("Matrix's size is incorrect");
-		Matrix res(m.rows(), m.columns());
 		for (size_t i = 0; i < m_rows; ++i) {
 			for (size_t j = 0; j < m_columns; ++j) {
-				res(i, j) = (*this)(i, j) + m(i, j);
+				(*this)(i, j) = (*this)(i, j) + m(i, j);
 			}
 		}
-		return res;
+		return *this;
 	}
 
 	Matrix operator+(const Matrix& m1, const Matrix& m2) {
@@ -188,7 +201,8 @@ namespace linalg {
 	Matrix& Matrix::operator-=(const Matrix& m) {
 		if (m_rows != m.rows() || m_columns != m.columns()) 
 			throw std::runtime_error("Matrix sizes are not equal");
-		return (*this) + m * (-1);
+		*this += m * (-1);
+			return *this;
 	};
 
 	Matrix operator-(const Matrix& m1, const Matrix& m2) {
@@ -198,16 +212,18 @@ namespace linalg {
 	}
 
 	Matrix& Matrix::operator*=(const Matrix& m) {
-		if (m_columns != m.rows())
+		if (columns() != m.rows())
 			throw std::runtime_error("The sizes of the matrices are different");
-		for (size_t i = 0; i < (*this).rows(); ++i) {
-			for (size_t j = 0; j < (*this).columns(); ++j) {
-				(*this)(i, j) = 0;
+		Matrix res(rows(), m.columns());
+		for (size_t i = 0; i < res.rows(); ++i) {
+			for (size_t j = 0; j < res.columns(); ++j) {
+				res(i, j) = 0;
 				for (size_t k = 0; k < m_columns; ++k) {
-					(*this)(i, j) += (*this)(i, k) * m(k, j);
+					res(i, j) += (*this)(i, k) * m(k, j);
 				}
 			}
 		}
+		*this = std::move(res);
 		return *this;
 	}
 
@@ -228,12 +244,16 @@ namespace linalg {
 		return true;
 	}
 
-	bool operator !=(const Matrix& m1, const Matrix& m2) { return !(m1 == m2); }
-
+	/**
+	* @brief
+	* 
+	* @param m1
+	*/
+	bool operator!=(const Matrix& m1, const Matrix& m2) { return !(m1 == m2); }
 
 	//Methods
 
-	void linalg::Matrix::reshape(int rows, int columns) { //Empty
+	void linalg::Matrix::reshape(size_t rows, size_t columns) { //Empty
 		if (empty())
 			return;
 		if (rows * columns != m_rows * m_columns)
@@ -283,9 +303,8 @@ namespace linalg {
 					res(i, j) *= -1;
 				}
 			}
-			if (res(i, i) == 0) {
+			if (equal(res(i, i), 0)) 
 				continue;   
-			}
 			if (rref) { //Reduced Row Echelon Form (уменьшенная ступенчатая форма матрицы)
 				double coef = res(i, i);
 				for (size_t j = i; j < res.m_columns; ++j) {
