@@ -26,7 +26,9 @@ namespace linalg {
 		//Methods for matrices
 		double trace() const;
 		double Matrix::norm() const;
-		
+		Matrix Matrix::Gauss(bool rref) const;
+		double Matrix::det() const;
+
 		//Operators
 		double& Matrix::operator ()(size_t row, size_t column);
 		const double& Matrix::operator ()(size_t row, size_t column) const;

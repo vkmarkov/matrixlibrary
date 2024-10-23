@@ -8,5 +8,5 @@ int main() {
 	a(1, 0) = 3;
 	a(1, 1) = 4;
 	linalg::Matrix b = { {1, 3}, {2, 3} };
-	std::cout << a << a.norm();
+	std::cout << a << a.det();
 }

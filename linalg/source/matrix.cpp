@@ -186,7 +186,7 @@ namespace linalg {
 
 	//Methods for matrices
 
-	double Matrix::norm() const {
+	double Matrix::norm() const { //Norm
 		if (empty()) 
 			throw std::runtime_error("Matrix is empty");
 		double res = 0;
@@ -198,7 +198,7 @@ namespace linalg {
 		return sqrt(res);
 	}
 
-	double Matrix::trace() const {
+	double Matrix::trace() const { //Trace
 		if (empty())
 			throw std::runtime_error("Matrix is empty");
 		if (m_rows != m_columns)
@@ -208,6 +208,56 @@ namespace linalg {
 			res += m_ptr[i * m_columns + i];
 		}
 		return res;
+	}
+
+	Matrix Matrix::Gauss(bool rref) const { //Gauss
+		Matrix res = *this;
+		for (size_t i = 0; i < res.m_rows && i < res.m_columns; ++i) { 
+			size_t max_row = i;
+			for (size_t j = i + 1; j < res.m_rows; ++j) {
+				if (std::fabs(res(j, i)) > std::fabs(res(max_row, i))) {
+					max_row = j;
+				}
+			}
+			if (max_row != i) {
+				for (size_t j = 0; j < res.m_columns; ++j) {
+					std::swap(res(i, j), res(max_row, j));
+					res(i, j) *= -1;
+				}
+			}
+			if (res(i, i) == 0) {
+				continue;   
+			}
+			if (rref) { //Reduced Row Echelon Form (уменьшенная ступенчатая форма матрицы)
+				double coef = res(i, i);
+				for (size_t j = i; j < res.m_columns; ++j) {
+					res(i, j) /= coef;
+				}
+			}   
+			for (size_t j = rref ? 0 : i + 1; j < res.m_rows; ++j) {
+				if (i != j) {
+					double coef = res(j, i) / res(i, i);
+					for (size_t k = 0; k < res.m_columns; k++) {
+						res(j, k) -= res(i, k) * coef;
+					}
+				}
+			}
+		}
+		return res;
+	}
+
+	double Matrix::det() const {
+		if (empty()) 
+			throw std::runtime_error("Matrix is empty"); //вопрос как вызывается throw
+		if (rows() != columns()) 
+			throw std::runtime_error("The matrix should be square");
+		Matrix d = *this; //либо -> для yhis
+		Matrix m = d.Gauss(false);
+		double opr = 1;
+		for (size_t i = 0; i < m.columns(); i++) {
+			opr *= m(i, i);
+		}
+		return opr;
 	}
 
 
