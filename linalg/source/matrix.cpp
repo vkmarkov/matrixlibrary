@@ -856,7 +856,7 @@ Matrix uni(size_t n) {
  * determinant.
  */
 const Matrix invert(const Matrix& m) {
-    if ((m.rows() != m.columns()) || (fabs(m.det() - 0) < 1e-10)) {
+    if ((m.rows() != m.columns()) || (fabs(m.det() - 0) < EPS)) {
         throw std::runtime_error("There is no inverse for the matrix");
     }
     linalg::Matrix res(m.rows(), m.columns());
