@@ -6,7 +6,7 @@ namespace linalg {
 
 	class Matrix {
 	public: //Constructors
-		Matrix() noexcept {}
+		Matrix() noexcept = default;
 		Matrix(size_t rows);
 		Matrix(size_t rows, size_t columns);
 		Matrix(const Matrix& m) noexcept;//copy
@@ -24,8 +24,8 @@ namespace linalg {
 		void reshape(int new_rows, int new_columns);
 
 		//Operators
-		double& Matrix::operator ()(size_t row, size_t column);
-		const double& Matrix::operator ()(size_t row, size_t column) const;
+		double& Matrix::operator()(size_t row, size_t column);
+		const double& Matrix::operator()(size_t row, size_t column) const;
 
 		//Assignment and arifmetic operators
 		Matrix& operator=(Matrix m) noexcept;

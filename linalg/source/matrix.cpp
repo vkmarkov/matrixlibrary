@@ -1,5 +1,9 @@
 #include "matrix.h"
 #include <iostream>
+#include <iomanip>
+#include <sstream>
+
+const double EPS = 1e-10;
 
 namespace linalg {
 
@@ -51,7 +55,7 @@ namespace linalg {
 		m_rows = lst.size();
 		m_columns = lst.begin()->size();
 		size_t i = 0;
-		for (std::initializer_list row : lst) {
+		for (auto&& row : lst) {
 			if (row.size() != lst.begin()->size()) {
 				throw std::runtime_error("All rows must have the same number of columns");
 			}
@@ -63,24 +67,73 @@ namespace linalg {
 
 	//Operators
 	
-	std::ostream& operator<<(std::ostream& out, const Matrix& m) { //Output operator
+	size_t max_length_first(const Matrix& m, const std::ostream& out) { // 1st column
+		size_t max_number_of_digits = 0;
+		std::stringstream sout;
+		sout << std::setiosflags(out.flags()) << std::setprecision(out.precision()); // flags and precision from out
 		for (size_t i = 0; i < m.rows(); ++i) {
-			for (size_t j = 0; j < m.columns(); ++j) {
-				out << m(i, j) << ' ';
+			sout << m(i, 0);
+			size_t length = sout.str().size();
+			if (max_number_of_digits < length) {
+				max_number_of_digits = length;
 			}
-			out << '\n';
+			sout.str("");
 		}
-		return out;
+		return max_number_of_digits;
 	}
+
+	size_t max_length_not_first(const Matrix& m, const std::ostream& out) { // not 1st column
+		size_t max_number_of_digits = 0;
+		std::stringstream sout;
+		sout << std::setiosflags(out.flags()) << std::setprecision(out.precision()) /*<< std::setf(std::ios::scientific)*/; // flags and precision from out
+		for (size_t i = 0; i < m.rows(); ++i) {
+			for (size_t j = 1; j < m.columns(); ++j) {
+				sout << m(i, j);
+				size_t length = sout.str().size();
+				if (max_number_of_digits < length) {
+					max_number_of_digits = length;
+				}
+				sout.str("");
+			}
+		}
+		return max_number_of_digits;
+	}
+
+	bool equal(const double& a, const double& b) { return std::fabs(a - b) < EPS; }
+
+	std::ostream& operator <<(std::ostream& out, const Matrix& m) {//Output operator
+		if (m.empty()) {
+			out << "|empty|";
+			return(out);
+		}
+		size_t first = max_length_first(m, out);
+		size_t not_first = max_length_not_first(m, out);
+		for (size_t i = 0; i < m.rows(); ++i) {
+			out << '|';
+			if (equal(m(i, 0), 0)) { out << std::setw(first) << 0; }
+			else {
+				out << std::setw(first) << m(i, 0);
+			};
+			for (size_t j = 1; j < m.columns(); ++j) {
+				if (equal(m(i, j), 0)) { out << std::setw(not_first + 1) << 0; }
+				else {
+					out << std::setw(not_first + 1) << m(i, j);
+				}
+			}
+			out << "|\n";
+		}
+		return(out);
+	}
+
 	
-	double& Matrix::operator ()(size_t row, size_t column) { // Index operator for non-constant with 2 parameter
+	double& Matrix::operator()(size_t row, size_t column) { // Index operator for non-constant with 2 parameter
 		if (row >= m_rows || column >= m_columns) {
 			throw std::out_of_range("Index out of range");
 		}
 		return m_ptr[row * m_columns + column];
 	}
 
-	const double& Matrix::operator ()(size_t row, size_t column) const { //for constant with 2 parameter 
+	const double& Matrix::operator()(size_t row, size_t column) const { //for constant with 2 parameter 
 		if (row >= m_rows || column >= m_columns) {
 			throw std::out_of_range("Index out of range");
 		}
@@ -95,30 +148,36 @@ namespace linalg {
 	}
 
 	//Arifmetic operators
-	Matrix operator+(const Matrix& m1, const Matrix& m2) {
-		if (m1.rows() != m2.rows() || m1.columns() != m2.columns()) 
+	Matrix& Matrix::operator+=(const Matrix& m) {
+		if (m.rows() != m_rows || m.columns() != m_columns)
 			throw std::runtime_error("Matrix's size is incorrect");
-		Matrix res(m1.rows(), m1.columns());
-		for (size_t i = 0; i < m1.rows(); ++i) {
-			for (size_t j = 0; j < m1.columns(); ++j) {
-				res(i, j) = m1(i, j) + m2(i,j);
+		Matrix res(m.rows(), m.columns());
+		for (size_t i = 0; i < m_rows; ++i) {
+			for (size_t j = 0; j < m_columns; ++j) {
+				res(i, j) = (*this)(i, j) + m(i, j);
 			}
 		}
 		return res;
 	}
-	
-	Matrix& Matrix::operator+=(const Matrix& m) {
-		*this = *this + m;
-		return *this;
+
+	Matrix operator+(const Matrix& m1, const Matrix& m2) {
+		Matrix res = m1;
+		res += m2;
+		return res;
+	}
+
+	Matrix& Matrix::operator*=(const double c) noexcept {
+		for (size_t i = 0; i < m_rows; ++i) {
+			for (size_t j = 0; j < m_columns; ++j) {
+				(*this)(i, j) = (*this)(i, j) * c;
+			}
+		}
+		return (*this);
 	}
 
 	Matrix operator*(const Matrix& m, const double c) noexcept {
-		Matrix res(m.rows(), m.columns());
-		for (size_t i = 0; i < m.rows(); ++i) {
-			for (size_t j = 0; j < m.columns(); ++j) {
-				res(i, j) = m(i, j) * c;
-			}
-		}
+		Matrix res = m;
+		res *= c;
 		return res;
 	}
 
@@ -126,42 +185,37 @@ namespace linalg {
 		return m * c;
 	}
 
-	Matrix operator-(const Matrix& m1, const Matrix& m2) {
-		if ((m1.rows() != m2.rows()) || (m1.columns() != m2.columns()))
-			throw std::runtime_error("Matrix sizes are different");
-	}
-
 	Matrix& Matrix::operator-=(const Matrix& m) {
-		*this = *this - m; //move operator
-		return *this;
+		if (m_rows != m.rows() || m_columns != m.columns()) 
+			throw std::runtime_error("Matrix sizes are not equal");
+		return (*this) + m * (-1);
 	};
 
-	Matrix& Matrix::operator*=(const double c) noexcept {
-		*this = *this * c;
-		return *this;
-	}
-
-	Matrix operator*(const Matrix& m1, const Matrix& m2) {
-		if (m1.columns() != m2.rows()) 
-			throw std::runtime_error("The sizes of the matrices are different"); 
-		Matrix res(m1.rows(), m2.columns());
-		for (size_t i = 0; i < res.rows(); ++i) {
-			for (size_t j = 0; j < res.columns(); ++j) {
-				res(i, j) = 0;
-				for (size_t k = 0; k < m1.columns(); ++k) {
-					res(i, j) += m1(i, k) * m2(k, j);
-				}
-			}
-		}
+	Matrix operator-(const Matrix& m1, const Matrix& m2) {
+		Matrix res = m1;
+		res -= m2;
 		return res;
 	}
 
 	Matrix& Matrix::operator*=(const Matrix& m) {
-		*this = *this * m;
+		if (m_columns != m.rows())
+			throw std::runtime_error("The sizes of the matrices are different");
+		for (size_t i = 0; i < (*this).rows(); ++i) {
+			for (size_t j = 0; j < (*this).columns(); ++j) {
+				(*this)(i, j) = 0;
+				for (size_t k = 0; k < m_columns; ++k) {
+					(*this)(i, j) += (*this)(i, k) * m(k, j);
+				}
+			}
+		}
 		return *this;
 	}
 
-	static bool equal(const double& a, const double& b) { return std::fabs(a - b) < 1e-10; }
+	Matrix operator*(const Matrix& m1, const Matrix& m2) {
+		Matrix res = m1;
+		res *= m2;
+		return res;
+	}
 
 	bool operator==(const Matrix& m1, const Matrix& m2) {
 		if ((m1.rows() != m2.rows()) || (m1.columns() != m2.columns())) 
@@ -179,7 +233,9 @@ namespace linalg {
 
 	//Methods
 
-	void linalg::Matrix::reshape(int rows, int columns) {
+	void linalg::Matrix::reshape(int rows, int columns) { //Empty
+		if (empty())
+			return;
 		if (rows * columns != m_rows * m_columns)
 			throw std::runtime_error("Number of elements in reshaped matrix must be the same");
 		m_rows = rows;
@@ -363,6 +419,7 @@ namespace linalg {
 			res *= t;
 		return res;
 	}
+	
 
 
 }
