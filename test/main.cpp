@@ -8,5 +8,6 @@ int main() {
 	a(1, 0) = 3;
 	a(1, 1) = 4;
 	linalg::Matrix b = { {1, 3}, {2, 3} };
-	std::cout << a << a.det();
+	linalg::Matrix c = linalg::concatenate(transpose(b), a);
+	std::cout << a << b << c;
 }

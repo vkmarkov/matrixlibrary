@@ -120,7 +120,7 @@ namespace linalg {
 		return res;
 	}
 
-	Matrix operator*(const double c, const Matrix& m) noexcept {
+	Matrix operator*(const double c, const Matrix& m) noexcept { 
 		return m * c;
 	}
 
@@ -246,12 +246,12 @@ namespace linalg {
 		return res;
 	}
 
-	double Matrix::det() const {
+	double Matrix::det() const { //Det
 		if (empty()) 
 			throw std::runtime_error("Matrix is empty"); //вопрос как вызывается throw
 		if (rows() != columns()) 
 			throw std::runtime_error("The matrix should be square");
-		Matrix d = *this; //либо -> для yhis
+		Matrix d = *this; //либо -> для this (this->
 		Matrix m = d.Gauss(false);
 		double opr = 1;
 		for (size_t i = 0; i < m.columns(); i++) {
@@ -260,5 +260,39 @@ namespace linalg {
 		return opr;
 	}
 
+	//Functions for matrices
+	Matrix concatenate(const Matrix& m1, const Matrix& m2) { //Concatenate
+		if (m1.rows() != m2.rows()) 
+			throw std::runtime_error("The matrices must have the same number of rows");
+		if (m1.empty()) 
+			return m2; 
+		if (m2.empty()) 
+			return m1; 
+		Matrix res(m1.rows(), m1.columns() + m2.columns());
+		for (size_t i = 0; i < m1.rows(); ++i) {
+			size_t t = 0;
+			for (size_t j = 0; j < m1.columns(); ++j) {
+				res(i, t) = m1(i, j);
+				t++;
+			}
+			for (size_t j = 0; j < m2.columns(); ++j) {
+				res(i, t) = m2(i, j);
+				t++;
+			}
+		}
+		return(res);
+	}
+
+	Matrix transpose(const Matrix& m) { //Transpose
+		if (m.empty()) 
+			throw std::runtime_error("Matrix is empty");
+		Matrix res(m.columns(), m.rows());
+		for (size_t i = 0; i < res.rows(); ++i) {
+			for (size_t j = 0; j < res.columns(); ++j) {
+				res(i, j) = m(j, i);
+			}
+		}
+		return res;
+	}
 
 }

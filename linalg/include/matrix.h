@@ -22,12 +22,6 @@ namespace linalg {
 		size_t columns() const noexcept { return m_columns; }
 		bool empty() const noexcept { return (m_rows == 0); }
 		void reshape(int new_rows, int new_columns);
-		
-		//Methods for matrices
-		double trace() const;
-		double Matrix::norm() const;
-		Matrix Matrix::Gauss(bool rref) const;
-		double Matrix::det() const;
 
 		//Operators
 		double& Matrix::operator ()(size_t row, size_t column);
@@ -40,12 +34,19 @@ namespace linalg {
 		Matrix& operator*=(const double c) noexcept;
 		Matrix& operator*=(const Matrix& m);
 
+		//Methods for matrices
+		double trace() const;
+		double Matrix::norm() const;
+		Matrix Matrix::Gauss(bool rref) const;
+		double Matrix::det() const;
+
 	private: //Fields
 		double* m_ptr = nullptr;
 		size_t m_rows = 0;
 		size_t m_columns = 0;
 	};
 
+	//The output operator
 	std::ostream& operator<<(std::ostream&, const Matrix&);
 
 	//Arifmetic operators
@@ -58,5 +59,9 @@ namespace linalg {
 	//Assigment operators out of class
 	bool operator==(const Matrix& m1, const Matrix& m2);
 	bool operator!=(const Matrix& m1, const Matrix& m2);
+
+	//Functions for matrices
+	Matrix concatenate(const Matrix& m1, const Matrix& m2); //Вопрос, почему эти функции лежат вне класса
+	Matrix transpose(const Matrix& m);
 
 }
