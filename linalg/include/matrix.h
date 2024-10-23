@@ -1,3 +1,46 @@
+/**
+ * @mainpage
+ *
+ * @section intro_sec Introduction
+ *
+ * Matrix is a C++ library for working with matrices. It provides a simple and
+ * efficient way to perform common matrix operations, such as addition,
+ * multiplication, and inversion. The library is designed to be easy to use and
+ * provides a lot of useful functions for working with matrices.
+ *
+ * @section features_sec Features
+ *
+ * The main features of the library are:
+ * - Matrix operations: addition, subtraction, multiplication, division,
+ *   determinant, inverse, transpose, rank, etc.
+ *
+ * @section requirements_sec Requirements
+ *
+ * The library requires C++17 or higher to compile.
+ *
+ * @section example_sec Example
+ *
+ * Here is an example of how to use the library:
+ *
+ * @code
+ * #include <iostream>
+ * #include "matrix.h"
+ *
+ * int main() {
+ *     linalg::Matrix a(2, 2);
+ *     a(0, 0) = 1;
+ *     a(0, 1) = 2;
+ *     a(1, 0) = 3;
+ *     a(1, 1) = 4;
+ *
+ *     Matrix b = { {1, 2, 3}, {4, 5, 6}, {7, 8, 9} };
+ *     Matrix c = linalg::power(b, 2);
+ *     std::cout << b << c;
+ *     return 0;
+ * }
+ * @endcode
+ */
+
 #pragma once
 #include <initializer_list>
 #include <iostream>
@@ -11,8 +54,8 @@ namespace linalg {
 		Matrix(size_t rows, size_t columns);
 		Matrix(const Matrix& m) noexcept;//copy
 		Matrix(Matrix&& m) noexcept;//move
-		Matrix::Matrix(std::initializer_list<double> lst) noexcept;
-		Matrix::Matrix(std::initializer_list<std::initializer_list<double>> lst);
+		Matrix(std::initializer_list<double> lst) noexcept;
+		Matrix(std::initializer_list<std::initializer_list<double>> lst);
 
 		//Destructor
 		~Matrix() { delete[] m_ptr; }
@@ -24,16 +67,12 @@ namespace linalg {
 		void reshape(size_t new_rows, size_t new_columns);
 
 		//Operators
-		double& Matrix::operator()(size_t row, size_t column);
-		const double& Matrix::operator()(size_t row, size_t column) const;
+		double& operator()(size_t row, size_t column);
+		const double& operator()(size_t row, size_t column) const;
 
 		//Assignment and arifmetic operators
 		Matrix& operator=(Matrix m) noexcept;
-		/**
-		* @brief Summ
-		* 
-		* @param[in] Matrix the matrix
-		*/
+		
 		Matrix& operator+=(const Matrix& m);
 		Matrix& operator-=(const Matrix& m);
 		Matrix& operator*=(const double c) noexcept;

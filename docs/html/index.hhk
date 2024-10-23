@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML><HEAD></HEAD><BODY>
+<OBJECT type="text/site properties">
+<param name="FrameName" value="right">
+</OBJECT>
+<UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a5a6c4310332522a4dd8390503b5be464"><param name="Name" value="det() const"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="matrix_8cpp.html#a4f21c44eb65edc7d67a4cbe8fca81bab"><param name="Name" value="equal(const double &amp;a, const double &amp;b)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ab100afe2f2b7159627b52e12213c1e8b"><param name="Name" value="Gauss(bool rref) const"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="index.html"><param name="Name" value="Lab1"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a5a6c4310332522a4dd8390503b5be464"><param name="Name" value="det() const"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ab100afe2f2b7159627b52e12213c1e8b"><param name="Name" value="Gauss(bool rref) const"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a3ee85000792ec3b3c16fc9fc11d370d2"><param name="Name" value="Matrix(const Matrix &amp;m) noexcept"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aa5f18bb9d7d7db8d57444944a86fcccb"><param name="Name" value="Matrix(Matrix &amp;&amp;m) noexcept"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a8f96b87b6a3dd8f8f4d11b6260174f7b"><param name="Name" value="Matrix(size_t rows)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aafe4238c0cdbe92486d28855d14c1dc3"><param name="Name" value="Matrix(size_t rows, size_t columns)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a11e739f5444b5bcbf0084b7a0ce4732a"><param name="Name" value="Matrix(std::initializer_list&lt; double &gt; lst) noexcept"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a44654bac3cc1ee24b3e3d0ac7ab37a43"><param name="Name" value="Matrix(std::initializer_list&lt; std::initializer_list&lt; double &gt; &gt; lst)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a832a0695cdb27222279a019d70fb56c7"><param name="Name" value="minor(size_t rows, size_t columns) const"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ad230dd6657ebeac6eff624dc7d243849"><param name="Name" value="norm() const"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a3f8677399f619c7be88ba9e62ace30f3"><param name="Name" value="operator()(size_t row, size_t column)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a301b619458307295d080f3d77a98fe5f"><param name="Name" value="operator()(size_t row, size_t column) const"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a63f26984333a74a464d6d31e5d6ef5d5"><param name="Name" value="operator*=(const double c) noexcept"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ac6cad550f4d7ab094197e1f060faa82e"><param name="Name" value="operator*=(const Matrix &amp;m)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aaf33ca858d3b47ffd0adf964704427da"><param name="Name" value="operator+=(const Matrix &amp;m)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aaad68f42252b84c22242236d8c6c157b"><param name="Name" value="operator-=(const Matrix &amp;m)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a47851fafac86b6455efcfb3fba322ec3"><param name="Name" value="operator=(Matrix m) noexcept"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html"><param name="Name" value="linalg::Matrix"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ab397cae560fbd57d351232dff61d07b9"><param name="Name" value="trace() const"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacelinalg.html"><param name="Name" value="linalg"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacelinalg.html#a4f21c44eb65edc7d67a4cbe8fca81bab"><param name="Name" value="equal(const double &amp;a, const double &amp;b)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacelinalg.html"><param name="Name" value="linalg"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacelinalg.html#adb3b03475c9c46a4653996c77ebb775d"><param name="Name" value="max_length_first(const Matrix &amp;m, const std::ostream &amp;out)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacelinalg.html"><param name="Name" value="linalg"></OBJECT>
+  <UL>
+    <LI><OBJECT type="text/sitemap"><param name="Local" value="namespacelinalg.html#ab535a759db458a52cf08319df2feaf24"><param name="Name" value="max_length_not_first(const Matrix &amp;m, const std::ostream &amp;out)"></OBJECT>
+  </UL>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a3ee85000792ec3b3c16fc9fc11d370d2"><param name="Name" value="Matrix(const Matrix &amp;m) noexcept"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aa5f18bb9d7d7db8d57444944a86fcccb"><param name="Name" value="Matrix(Matrix &amp;&amp;m) noexcept"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a8f96b87b6a3dd8f8f4d11b6260174f7b"><param name="Name" value="Matrix(size_t rows)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aafe4238c0cdbe92486d28855d14c1dc3"><param name="Name" value="Matrix(size_t rows, size_t columns)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a11e739f5444b5bcbf0084b7a0ce4732a"><param name="Name" value="Matrix(std::initializer_list&lt; double &gt; lst) noexcept"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a44654bac3cc1ee24b3e3d0ac7ab37a43"><param name="Name" value="Matrix(std::initializer_list&lt; std::initializer_list&lt; double &gt; &gt; lst)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="matrix_8cpp.html#adb3b03475c9c46a4653996c77ebb775d"><param name="Name" value="max_length_first(const Matrix &amp;m, const std::ostream &amp;out)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="matrix_8cpp.html#ab535a759db458a52cf08319df2feaf24"><param name="Name" value="max_length_not_first(const Matrix &amp;m, const std::ostream &amp;out)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a832a0695cdb27222279a019d70fb56c7"><param name="Name" value="minor(size_t rows, size_t columns) const"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ad230dd6657ebeac6eff624dc7d243849"><param name="Name" value="norm() const"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a301b619458307295d080f3d77a98fe5f"><param name="Name" value="operator()(size_t row, size_t column) const"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a3f8677399f619c7be88ba9e62ace30f3"><param name="Name" value="operator()(size_t row, size_t column)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a63f26984333a74a464d6d31e5d6ef5d5"><param name="Name" value="operator*=(const double c) noexcept"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ac6cad550f4d7ab094197e1f060faa82e"><param name="Name" value="operator*=(const Matrix &amp;m)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aaf33ca858d3b47ffd0adf964704427da"><param name="Name" value="operator+=(const Matrix &amp;m)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#aaad68f42252b84c22242236d8c6c157b"><param name="Name" value="operator-=(const Matrix &amp;m)"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#a47851fafac86b6455efcfb3fba322ec3"><param name="Name" value="operator=(Matrix m) noexcept"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="md__c_1_2_users_2_user_2_desktop_2_a_i_p_2lab1_2lab1_2_r_e_a_d_m_e.html"><param name="Name" value="README"></OBJECT>
+  <LI><OBJECT type="text/sitemap"><param name="Local" value="classlinalg_1_1_matrix.html#ab397cae560fbd57d351232dff61d07b9"><param name="Name" value="trace() const"></OBJECT>
+</UL>
+</BODY>
+</HTML>
