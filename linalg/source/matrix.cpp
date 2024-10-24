@@ -30,6 +30,12 @@ Matrix::Matrix(size_t rows) {
         throw std::runtime_error(
             "The matrix cannot be with a negative number of rows");
     }
+    if (rows == 0) {
+        m_rows = 0;
+        m_columns = 0;
+        m_ptr = nullptr;
+        return;
+    }
     m_rows    = rows;
     m_columns = 1;
     m_ptr     = new double[rows];
@@ -51,9 +57,15 @@ Matrix::Matrix(size_t rows, size_t columns) {
         throw std::runtime_error(
             "The matrix cannot be with a negative number of rows or columns");
     }
-    m_rows    = rows;
+    if ((rows == 0) || (columns == 0)) {
+        m_rows = 0;
+        m_columns = 0;
+        m_ptr = nullptr;
+        return;
+    }
+    m_rows = rows;
     m_columns = columns;
-    m_ptr     = new double[rows * columns];
+    m_ptr = new double[rows * columns];
 }
 
 /**
@@ -103,6 +115,12 @@ Matrix::Matrix(Matrix&& m) noexcept {
  * corresponds to a row in the matrix.
  */
 Matrix::Matrix(std::initializer_list<double> lst) noexcept {
+    if (lst.size() == 0) {
+        m_ptr = nullptr;
+        m_rows = lst.size();
+        m_columns = 0;
+        return;
+    }
     m_ptr     = new double[lst.size()];
     m_rows    = lst.size();
     m_columns = 1;
@@ -700,13 +718,13 @@ Matrix Matrix::Gauss(bool rref) const { // Gauss
  */
 double Matrix::det() const {
     if (empty()) {
-        throw std::runtime_error("Matrix is empty"); // ������ ��� ���������� throw
+        throw std::runtime_error("Matrix is empty"); 
     }
     if (rows() != columns()) {
         throw std::runtime_error("The matrix should be square");
     }
     // Create a temporary matrix to avoid modifying the original matrix
-    Matrix d   = *this; // ���� -> ��� this (this->
+    Matrix d   = *this; 
     Matrix m   = d.Gauss(false);
     double opr = 1;
     for (size_t i = 0; i < m.columns(); i++) {
@@ -770,11 +788,8 @@ double Matrix::minor(size_t rows, size_t columns) const {
  * If only one of the matrices is empty, the result is the other matrix.
  */
 Matrix concatenate(const Matrix& m1, const Matrix& m2) { // Concatenate
-    if (m1.empty()) {
-        return m2;
-    }
-    if (m2.empty()) {
-        return m1;
+    if (m1.empty() || m2.empty()) {
+        throw std::runtime_error("One or two matrix is empty");
     }
     if (m1.rows() != m2.rows()) {
         throw std::runtime_error("The matrices must have the same number of rows");
@@ -892,7 +907,7 @@ const Matrix invert_old(const Matrix& m) {
  * matrix with an identity matrix, applies Gaussian elimination, and extracts the inverse matrix from the result.
  */
 Matrix invert(const Matrix& m) {
-    if (m.det() == 0) 
+    if (equal(m.det(), 0)) 
         throw std::runtime_error("Matrix is degenerate");
     if (m.empty()) 
         throw std::runtime_error("Matrix is empty");
@@ -910,21 +925,7 @@ Matrix invert(const Matrix& m) {
     return inverse;
 }
 
-/**
- * @brief Calculates the power of the matrix
- *
- * @param[in] m Input matrix
- * @param[in] deg Degree of the power
- * @return The result of the power of the matrix
- * @throws std::runtime_error If the matrix is empty or the dimensions are different
- *
- * @details
- * This function computes the power of a given matrix. It first checks if the matrix
- * is empty or if the dimensions are different, and if so, throws an exception. If
- * the degree of the power is 0, it returns the unit matrix. If the degree is
- * negative, it returns the inverse of the matrix. Otherwise, it multiplies the
- * matrix by itself deg times.
- */
+
 
  /**
   * @brief Calculates the power of the matrix
@@ -934,7 +935,8 @@ Matrix invert(const Matrix& m) {
   * @return A new matrix that is the result of raising the input matrix to the power `p`.
   * @throws std::runtime_error If the matrix is non-invertible when `p` is negative.
   * 
-  * @details This function raises a matrix `m` to an integer power `p`. If `p` is zero,
+  * @details 
+  * This function raises a matrix `m` to an integer power `p`. If `p` is zero,
   * the function returns the identity matrix. For positive powers, the matrix
   * is multiplied by itself `p` times. For negative powers, the function returns
   * the inverse of the matrix raised to the absolute value of `p`.
