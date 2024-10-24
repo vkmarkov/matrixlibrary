@@ -87,6 +87,9 @@ Matrix::Matrix(const Matrix& m) noexcept {
     }
 }
 
+
+Matrix a = d;
+
 /**
  * @brief Move constructor
  * @param[in] m The matrix to be moved
@@ -334,13 +337,26 @@ const double& Matrix::operator()(size_t row, size_t column) const {
  * with the contents of the other matrix, and then returns a reference to the current
  * matrix.
  */
-Matrix& Matrix::operator=(Matrix other) noexcept {
+Matrix& Matrix::operator=(const Matrix& m) noexcept {
+    if (rows() * columns() != m.rows() * m.columns()) {
+        double* m_ptr_new = new double[m.rows() * m.columns()];
+        delete[] m_ptr;
+        m_ptr = m_ptr_new;
+    }
+    m_rows = m.m_rows;
+    m_columns = m.m_columns;
+    for (size_t i = 0; i < m_rows * m_columns; ++i) {
+        m_ptr[i] = m.m_ptr[i];
+    }
+    return (*this);
+}
+
+Matrix& Matrix::operator=(Matrix&& other) noexcept {
     std::swap(this->m_ptr, other.m_ptr);
     std::swap(this->m_rows, other.m_rows);
     std::swap(this->m_columns, other.m_columns);
     return *this;
 }
-
 /**
  * @brief Adds another matrix to the current matrix
  *
@@ -685,8 +701,7 @@ Matrix Matrix::Gauss(bool rref) const { // Gauss
         if (equal(res(i, i), 0)) {
             continue;
         }
-        if (rref) { // Reduced Row Echelon Form (����������� ����������� �����
-                    // �������)
+        if (rref) { // Reduced Row Echelon Form 
             double coef = res(i, i);
             for (size_t j = i; j < res.m_columns; ++j) {
                 res(i, j) /= coef;
@@ -925,8 +940,6 @@ Matrix invert(const Matrix& m) {
     return inverse;
 }
 
-
-
  /**
   * @brief Calculates the power of the matrix
   *
@@ -942,8 +955,8 @@ Matrix invert(const Matrix& m) {
   * the inverse of the matrix raised to the absolute value of `p`.
   */
 Matrix power(const Matrix& m, int p) {
-    //if (p < 0) { throw std::runtime_error("Power < 0"); };
-    if (p == 0) { return uni(m.rows()); }
+    if (p == 0) 
+        return uni(m.rows());
     Matrix res = m;
     for (int i = 0; i < std::abs(p) - 1; ++i) {
         res *= m;

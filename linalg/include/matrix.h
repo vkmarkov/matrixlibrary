@@ -71,8 +71,8 @@ namespace linalg {
 		const double& operator()(size_t row, size_t column) const;
 
 		//Assignment and arifmetic operators
-		Matrix& operator=(Matrix m) noexcept;
-		
+		Matrix& operator=(const Matrix& m) noexcept;
+		Matrix& operator=(Matrix&& m) noexcept;
 		Matrix& operator+=(const Matrix& m);
 		Matrix& operator-=(const Matrix& m);
 		Matrix& operator*=(const double c) noexcept;
