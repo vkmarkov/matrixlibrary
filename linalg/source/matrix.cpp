@@ -87,9 +87,6 @@ Matrix::Matrix(const Matrix& m) noexcept {
     }
 }
 
-
-Matrix a = d;
-
 /**
  * @brief Move constructor
  * @param[in] m The matrix to be moved
