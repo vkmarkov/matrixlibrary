@@ -109,6 +109,7 @@ namespace linalg {
 	Matrix concatenate(const Matrix& m1, const Matrix& m2); //Вопрос, почему эти функции лежат вне класса
 	Matrix transpose(const Matrix& m);
 	Matrix uni(size_t n); //Auxiliary function for creating a unit matrix //+
-	const Matrix invert(const Matrix& m);
+	const Matrix invert_old(const Matrix& m);
+	Matrix invert(const Matrix& m);
 	Matrix power(const Matrix& m, int deg);
 }

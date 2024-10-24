@@ -848,14 +848,17 @@ Matrix uni(size_t n) {
  * @return The inverse matrix
  * @throws std::runtime_error If the matrix is empty, not square, or determinant is
  * zero
- *
+ * 
+ * @deprecated This implementation uses an older method of matrix inversion. 
+ * Consider using the new method `invert` for better performance.
+ * 
  * @details
  * This function computes the inverse of a given square matrix. It first checks if
  * the matrix is square and has a non-zero determinant. If these conditions are met,
  * it calculates the inverse using the formula involving minors, cofactors, and the
  * determinant.
  */
-const Matrix invert(const Matrix& m) {
+const Matrix invert_old(const Matrix& m) {
     if ((m.rows() != m.columns()) || (fabs(m.det() - 0) < EPS)) {
         throw std::runtime_error("There is no inverse for the matrix");
     }
@@ -873,6 +876,41 @@ const Matrix invert(const Matrix& m) {
 }
 
 /**
+ * @brief Inverts a square matrix.
+ *
+ *
+ * @param [in] m The matrix to be inverted. Must be square and non-degenerate.
+ * @return A new matrix that is the inverse of the input matrix.
+ * @throws std::runtime_error If the matrix is degenerate, empty, or not square.
+ * 
+ * @details
+ *  * This function takes a square matrix and returns its inverse. If the matrix is degenerate
+ * (i.e., its determinant is zero), an exception is thrown. Similarly, if the matrix is empty or not square,
+ * the function throws an exception.
+ *
+ * The function internally uses Gaussian elimination to compute the inverse. It concatenates the input
+ * matrix with an identity matrix, applies Gaussian elimination, and extracts the inverse matrix from the result.
+ */
+Matrix invert(const Matrix& m) {
+    if (m.det() == 0) 
+        throw std::runtime_error("Matrix is degenerate");
+    if (m.empty()) 
+        throw std::runtime_error("Matrix is empty");
+    if (m.rows() != m.columns()) 
+        throw std::runtime_error("Matrix is not square");
+    Matrix temp = uni(m.rows());
+    temp = concatenate(m, temp);
+    temp = temp.Gauss(true);
+    Matrix inverse(m.rows(), m.columns());
+    for (size_t i = 0; i < m.columns(); ++i) {
+        for (size_t j = 0; j < m.rows(); ++j) {
+            inverse(i, j) = temp(i, j + m.columns());
+        }
+    }
+    return inverse;
+}
+
+/**
  * @brief Calculates the power of the matrix
  *
  * @param[in] m Input matrix
@@ -887,28 +925,28 @@ const Matrix invert(const Matrix& m) {
  * negative, it returns the inverse of the matrix. Otherwise, it multiplies the
  * matrix by itself deg times.
  */
-Matrix power(const Matrix& m, int deg) {
-    if (m.empty()) {
-        return m;
+
+ /**
+  * @brief Calculates the power of the matrix
+  *
+  * @param[in] m The matrix to be raised to a power. Must be square.
+  * @param[in] p The exponent. Can be a positive or negative integer.
+  * @return A new matrix that is the result of raising the input matrix to the power `p`.
+  * @throws std::runtime_error If the matrix is non-invertible when `p` is negative.
+  * 
+  * @details This function raises a matrix `m` to an integer power `p`. If `p` is zero,
+  * the function returns the identity matrix. For positive powers, the matrix
+  * is multiplied by itself `p` times. For negative powers, the function returns
+  * the inverse of the matrix raised to the absolute value of `p`.
+  */
+Matrix power(const Matrix& m, int p) {
+    //if (p < 0) { throw std::runtime_error("Power < 0"); };
+    if (p == 0) { return uni(m.rows()); }
+    Matrix res = m;
+    for (int i = 0; i < std::abs(p) - 1; ++i) {
+        res *= m;
     }
-    if (m.rows() != m.columns()) {
-        throw std::runtime_error("Different dimensions");
-    }
-    Matrix res;
-    if (deg == 0) {
-        // Return the unit matrix
-        res = uni(m.rows());
-    } else if (deg < 0) {
-        // Return the inverse
-        res = invert(m);
-    } else {
-        // Multiply by itself deg times
-        res      = m;
-        Matrix t = res;
-        for (int i = 1; i < abs(deg); ++i) {
-            res *= t;
-        }
-    }
+    if (p < 0) { res = invert(res); }
     return res;
 }
 
