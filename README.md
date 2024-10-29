@@ -1,3 +1,1 @@
-Лабораторная работа №1.
-Марков Виктор Константинович
-БПМ233, 2-я подгруппа
+Matrix is a C++ library for working with matrices. It provides a simple and efficient way to perform common matrix operations, such as addition, multiplication, and inversion. The library is designed to be easy to use and provides a lot of useful functions for working with matrices.
